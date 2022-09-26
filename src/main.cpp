@@ -1,16 +1,7 @@
+#include "Car.h"
 #include "stdint.h"
-#include <Arduino.h>
 #include "Wheel.h"
-
-
-const uint8_t PIN_IN_1_LEFT = 5;
-const uint8_t PIN_IN_2_LEFT = 4;
-const uint8_t PIN_IN_3_LEFT = 7;
-const uint8_t PIN_IN_4_LEFT = 6;
-const uint8_t PIN_IN_1_RIGHT = PIN_A4;
-const uint8_t PIN_IN_2_RIGHT = PIN_A3;
-const uint8_t PIN_IN_3_RIGHT = PIN_A1;
-const uint8_t PIN_IN_4_RIGHT = PIN_A2;
+#include <Arduino.h>
 
 void setup()
 {
@@ -20,64 +11,25 @@ void setup()
     TCCR2B &= B11111000 | B00000010;
 }
 
-
-// init motors
-Wheel wheelLeftFront {PIN_IN_1_LEFT, PIN_IN_2_LEFT};
-Wheel wheelLeftBack {PIN_IN_3_LEFT, PIN_IN_4_LEFT};
-Wheel wheelRightFront {PIN_IN_1_RIGHT, PIN_IN_2_RIGHT};
-Wheel wheelRightBack {PIN_IN_3_RIGHT, PIN_IN_4_RIGHT};
+// init motors and car
+Car car {
+    Wheel {6, 7},
+    Wheel {A4, A3},
+    Wheel {8, 9},
+    Wheel {A1, A2}
+};
 
 void loop()
 {
+    car.forward();
     delay(1000);
-    wheelLeftFront.forward();
-    wheelLeftBack.forward();
-    wheelRightFront.forward();
-    wheelRightBack.forward();
 
-    delay(1000);
-    wheelLeftFront.stop();
-    wheelLeftBack.stop();
-    wheelRightFront.stop();
-    wheelRightBack.stop();
+    car.stop();
+    delay(5000);
 
+    car.backward();
     delay(1000);
-    wheelLeftFront.backward();
-    wheelLeftBack.backward();
-    wheelRightFront.backward();
-    wheelRightBack.backward();
-
-    delay(1000);
-    wheelLeftFront.stop();
-    wheelLeftBack.stop();
-    wheelRightFront.stop();
-    wheelRightBack.stop();
-
-    delay(1000);
-    wheelLeftFront.backward();
-    wheelLeftBack.backward();
-    wheelRightFront.forward();
-    wheelRightBack.forward();
-
-    delay(1000);
-    wheelLeftFront.stop();
-    wheelLeftBack.stop();
-    wheelRightFront.stop();
-    wheelRightBack.stop();
-
-    delay(1000);
-    wheelLeftFront.forward();
-    wheelLeftBack.forward();
-    wheelRightFront.backward();
-    wheelRightBack.backward();
-
-    delay(1000);
-    wheelLeftFront.stop();
-    wheelLeftBack.stop();
-    wheelRightFront.stop();
-    wheelRightBack.stop();
 
     // Serial.print("Distance: ");
     // Serial.println(ultrasonic.getDistance());
 }
-
